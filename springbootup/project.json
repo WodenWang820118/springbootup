@@ -1,0 +1,21 @@
+{
+  "name": "springbootup",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "springbootup/src",
+  "targets": {
+    "build": {
+      "executor": "@nxrocks/nx-spring-boot:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "springbootup/build"
+      }
+    },
+    "serve": {
+      "executor": "@nxrocks/nx-spring-boot:serve",
+      "options": {
+        "outputPath": "springbootup/build"
+      }
+    }
+  },
+  "tags": []
+}
