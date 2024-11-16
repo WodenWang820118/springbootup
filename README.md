@@ -1,96 +1,83 @@
 # NxSpringbootCollection
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Table of Contents
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+- [Overview](#overview)
+- [Setup](#setup)
+- [Springbootup](#springbootup)
+  - [Spring Boot](#spring-boot)
+  - [Development server](#development-server)
+  - [Endpoints](#endpoints)
+  - [Aspects Oriented Programming](#aspects-oriented-programming)
+  - [H2 Database](#h2-database)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Overview
 
-## Run tasks
+The project is a collection of Spring Boot projects. The projects are created to demonstrate the features of Nx workspace. It could be used as a reference for creating microservices using Nx workspace. Using Nx workspace, we can configure Spring Boot projects with ease.
 
-To run tasks with Nx use:
+## Setup
 
-```sh
-npx nx <target> <project-name>
+```bash
+npm install -g pnpm
 ```
 
-For example:
-
-```sh
-npx nx build myproject
+```bash
+pnpm install
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+## Springbootup
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Spring Boot
 
-## Add new projects
+The Spring Boot uses `pom.xml` for the dependencies management.
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+### Development server
 
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
+```bash
+pnpm run start
 ```
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+### Endpoints
 
-```sh
-# Genenerate an app
-npx nx g @nx/react:app demo
+After running the above command, you can access the following features via `http://localhost:8080/`:
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
+- Health
+  - `http://localhost:8080/health` - Whether the application is up and running
+- Employee
+  - GET `http://localhost:8080/employee/list` - Get all employees
+  - GET `http://localhost:8080/employee/get/{id}` - Get employee by id
+  - POST `http://localhost:8080/employee/save` - Save employee with request body
+  - DELETE `http://localhost:8080/employee/delete/{id}` - Update employee by id
+
+### Aspects Oriented Programming
+
+The `aspect` directory contains the implementation of Aspect Oriented Programming in Spring Boot.
+
+- Use `@Around`, `@Before`, `@After`, `@AfterReturning`, `@AfterThrowing` annotations to implement the aspects
+- `AopExpression.java` - Contains the pointcut expressions
+- `EmployeeLoggingAspect.java`, `MyApiAnalyticsAspect.java`, `MyCloudLogAsyncAspect.java`, `MyDemoLoggingAspect.java` - Contains the implementation of the aspects for `services`
+
+### H2 Database
+
+H2 database is SQL database written in Java. The configuration:
+
+```java
+// DatabaseConfig.java
+package com.example.demo;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+@Configuration
+public class DatabaseConfig {
+  @Bean
+  public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    return new JdbcTemplate(dataSource);
+  }
+}
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+It is for CRUD operations for the `Employee` entity.
