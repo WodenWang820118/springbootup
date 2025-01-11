@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.common;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
