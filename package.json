@@ -3,18 +3,18 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve springbootup"
+    "start": "nx serve springbootup",
+    "build": "nx build springbootup",
+    "test": "nx test springbootup"
   },
   "private": true,
   "devDependencies": {
-    "@nx/js": "19.7.3",
-    "@nx/workspace": "19.7.3",
+    "@nx/js": "20.3.1",
+    "@nx/workspace": "20.3.1",
     "@nxrocks/nx-spring-boot": "^10.2.6",
-    "nx": "19.7.3"
+    "nx": "20.3.1"
   },
   "packageManager": "pnpm@9.13.2",
   "nx": {},
-  "dependencies": {
-    "@nx-springboot-collection/source": "file:"
-  }
+  "dependencies": {}
 }
